@@ -33,10 +33,10 @@ def upload(file, srt, extension):
         srt_path = "uploads/" + session["id"] + "/" + str(uuid4()) + ".srt"
 
         # Write the input files
-        with open(vid_path, "wb") as f:
-            f.write(file.read())
-        with open(srt_path, "wb") as f:
-            f.write(srt.read())
+        with open(vid_path, "w") as f:
+            f.write(file)
+        with open(srt_path, "w") as f:
+            f.write(srt)
 
         call(["php", "files.php", dumps({"task" : "check", "user" : session["id"]})])
 
