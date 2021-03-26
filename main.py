@@ -25,7 +25,7 @@ def send_file(user, filename):
 def upload(file, srt, extension):
     if file:
         # Ensure the user has a file directory
-        call(["php", "files.php", dumps({"task" : "create dir", "user" : session["id"]})])
+        call(["php", "files.php", dumps({"task" : "create", "user" : session["id"]})])
 
         # Generate random file names
         vid_path = "uploads/" + session["id"] + "/" + str(uuid4()) + "." + extension
@@ -37,6 +37,8 @@ def upload(file, srt, extension):
             f.write(file.read())
         with open(srt_path, "wb") as f:
             f.write(srt.read())
+
+        call(["php", "files.php", dumps({"task" : "check", "user" : session["id"]})])
 
         # Add the captions
         captionize(vid_path, srt_path, out_path)
