@@ -85,6 +85,7 @@ switch ($data->task) {
     break;
 }
 
+// Ensure that no file has exceeded their time limit
 check_time_overload("uploads");
 
 ?>
