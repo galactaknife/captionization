@@ -26,11 +26,9 @@ $(document).ready(function() {
         type: "POST",
         data: fd,
         success: function(data) {
-          data = data["url"];
-
           // Show download links
           document.getElementById("output").style.display = "block";
-          document.querySelector("#output a").href = data;
+          document.querySelector("#output a").href = data["url"];
 
           // Notify user that the process is complete
           $("#message").html("Captionization process complete!");
