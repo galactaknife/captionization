@@ -1,5 +1,5 @@
 from flask import Flask
-import main
+import app as a
 
 def create_app(debug=False):
     # Create app instance
@@ -13,6 +13,6 @@ def create_app(debug=False):
     # Set upload folder
     app.config["UPLOAD_FOLDER"] = "/uploads"
 
-    # Use all routes defined in the main blueprint
-    app.register_blueprint(main.main)
+    # Use all routes defined in the app blueprint
+    app.register_blueprint(a.app)
     return app
