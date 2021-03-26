@@ -20,9 +20,8 @@ function check_time_overload($path) {
 
 // Grab argument data
 if ($argc > 1) {
-  $json_data = $argv[1];
-  // Convert input JSON into PHP object
-  $data = json_decode($json_data);
+  // Convert argument JSON into a PHP object
+  $data = json_decode($argv[1];);
 }
 
 // Determine what task is needed

@@ -2,8 +2,6 @@ from flask import Flask
 import main
 
 def create_app(debug=False):
-    global app
-
     # Create app instance
     app = Flask(__name__)
     app.debug = debug
