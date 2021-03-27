@@ -3,7 +3,7 @@ $(document).ready(function() {
     // Prevent an HTTP POST request
     e.preventDefault();
 
-    // Check that the video size isn't larger than 30 MB
+    // Check that the video size isn't larger than 50 MB
     if ($("input[name='vid']")[0].files[0].size > 50000000) {
       // If file size is too large, notify user
       $("#message").show();
