@@ -35,19 +35,19 @@ function sendImages() {
   if (!video || !captions) {
     return;
   }
-  //If the user is converting already, notify them
+  // If the user is converting already, notify them
   else if (converting) {
     alert("You already have a conversion in process.");
     return;
   }
 
   // Create FormData element in order to send through ajax
-  var formData = new FormData();
+  var fd = new FormData();
 
   // Add items to FormData
-  formData.append("srt", captions);
-  formData.append("vid", video);
-  formData.append("extension", video.name.split(".").pop());
+  fd.append("srt", captions);
+  fd.append("vid", video);
+  fd.append("extension", video.name.split(".").pop());
 
   // Set conversion status to true
   converting = true;
@@ -56,7 +56,7 @@ function sendImages() {
   $.ajax({
     url: "/file",
     type: "POST",
-    data: formData,
+    data: fd,
 
     success: function(data) {
       // Process the new data from the server
@@ -127,6 +127,7 @@ $(document).ready(() => {
     // Ensure that file isn't too large
     if ($(this).get(0).files[0].size > 50000000) {
       $("#videoDrop h2").html("File is too large.  Max size is 50 MB");
+      return;
     }
     // Select  file and notify client
     video = $(this).get(0).files[0];
