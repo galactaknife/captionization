@@ -22,19 +22,19 @@ def file():
 def send_file(user, filename):
     return send_from_directory("uploads/" + user, filename)
 
-def upload(file, srt, ext):
-    if file:
+def upload(vid, srt, extension):
+    if vid:
         # Ensure the user has a file directory
         call(["php", "files.php", dumps({"task" : "create", "user" : session["id"]})])
 
         # Generate random file names
-        vid_path = "uploads/" + session["id"] + "/" + str(uuid4()) + "." + ext
+        vid_path = "uploads/" + session["id"] + "/" + str(uuid4()) + "." + extension
         out_path = "uploads/" + session["id"] + "/" + str(uuid4()) + ".mp4"
         srt_path = "uploads/" + session["id"] + "/" + str(uuid4()) + ".srt"
 
         # Write the input files
         with open(vid_path, "wb") as f:
-            f.write(file.read())
+            f.write(vid.read())
         with open(srt_path, "wb") as f:
             f.write(srt.read())
 
