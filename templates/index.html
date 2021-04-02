@@ -1,23 +1,51 @@
 <!DOCTYPE html>
 
-<html lang="en-US">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title></title>
+    <title>Captioning Test</title>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='client.js') }}"></script>
+    <script src="{{ url_for('static', filename='animations.js') }}"></script>
   </head>
   <body>
-    <p hidden id="message"></p>
-    <form enctype="multipart/form-data">
-      <p>Video file: <input type="file" name="vid" required accept="video/*"></p>
-      <p>SRT file: <input type="file" name="srt" required accept=".srt"></p>
-      <p><input type="submit" value="Captionize"></p>
-    </form>
-    <div id="output" hidden>
-      <p><a href="" target="_blank">View captionized video</a></p>
-      <p><a download href="">Download captionized video</a></p>
+    <div class="siteContainer">
+      <div style="display: none;" class="overlay">
+        <div class="glassCard centerAbs" style="display: none;">
+          <h1>Your video is ready</h1>
+          <a href="#" target="_blank"><img src="{{ url_for('static', filename='go.png') }}" class="centerAbs"></a>
+          <a href="#" download id="downloadVid"><p>Download</p></a>
+        </div>
+      </div>
+      <div class="header">
+        <p class="centerAbsY">Create Task Video Editor | Adding Captions</p>
+      </div>
+      <div class="content">
+        <form action="formProcessing" method="post" class="centerAbs">
+          <div class="fileInputContainer" id="videoDrop">
+            <h1>Video</h1>
+            <h2>Please drag and drop a recording here</h2>
+          </div>
+          <div class="fileInputContainer" id="captionsDrop">
+            <h1>Captions</h1>
+            <h2>Please drag and drop a .srt file</h2>
+          </div>
+          <div class="submitBar">
+            <input class="submitInput" type="submit" value="Process">
+          </div>
+        </form>
+      </div>
+      <div class="footer">
+        <p class="centerAbs">&copy; 2021 B-Man Fan Club</p>
+      </div>
+    </div>
+    <div hidden>
+      <input type="file" id="vidTempFile" accept="video/*">
+      <input type="file" id="srtTempFile" accept=".srt">
     </div>
   </body>
 </html>
