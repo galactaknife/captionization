@@ -1,57 +1,106 @@
-$(document).ready(function() {
-  $("form").submit(function(e) {
-    // Prevent an HTTP POST request
+var captions, video;
+var converting = false;
+
+function handleVideoDrop(e) {
+  if (!["mp4", "mov", "mpg", "m4v"].includes(e.originalEvent.dataTransfer.files[0].name.split(".").pop())) {
+    $("#videoDrop h2").html("Invalid file type.");
+  }
+  else {
+    video = e.originalEvent.dataTransfer.files[0];
+    $("#videoDrop h2").html(video.name);
+  }
+}
+
+function handleCaptionDrop(e) {
+  if (e.originalEvent.dataTransfer.files[0].name.split(".").pop() != "srt") {
+    $("#captionsDrop h2").html("Invalid file type.  Only accepts .srt files");
+  }
+  else {
+    captions = e.originalEvent.dataTransfer.files[0];
+    $("#captionsDrop h2").html(captions.name);
+  }
+}
+
+function sendImages() {
+  if (!video || !captions) {
+    return;
+  }
+  else if (converting) {
+    alert("You already have a conversion in process.");
+    return;
+  }
+  var formData = new FormData();
+
+  formData.append("srt", captions);
+  formData.append("vid", video);
+  formData.append("extension", video.name.split(".").pop());
+
+  converting = true;
+
+  $.ajax({
+    url: "/file",
+    type: "POST",
+    data: formData,
+    success: function(data) {
+      onUrlReceived(data.url);
+      converting = false;
+    },
+
+    cache: false,
+    contentType: false,
+    processData: false,
+
+    error: function(err) {
+      alert("There was an error somewhere.");
+      console.log(err);
+      converting = false;
+    }
+  });
+}
+
+$(document).ready(() => {
+  $("#captionsDrop, #videoDrop").on("dragover", function(e) {
     e.preventDefault();
+    e.stopPropagation();
+  });
 
-    // Check that the video size isn't larger than 50 MB
-    if ($("input[name='vid']")[0].files[0].size > 50000000) {
-      // If file size is too large, notify user
-      $("#message").show();
-      $("#message").html("Video file is too large.  Max file size is 50 MB");
-    }
+  $("#captionsDrop, #videoDrop").on("dragleave", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+  });
 
-    else {
-      // Create FormData instance to send to server
-      var f = new FormData();
+  $("#captionsDrop").on("drop", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleCaptionDrop(e);
+  });
 
-      // Create file name of output file
-      var name = $("input[type='file']").get(0).files[0].name.split(".")[0] + "-captioned." + $("input[type='file']").get(0).files[0].name.split(".").pop();
+  $("#videoDrop").on("drop", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      handleVideoDrop(e);
+  });
 
-      // Add data to form
-      f.append("vid", $("input[name='vid']")[0].files[0]);
-      f.append("srt", $("input[name='srt']")[0].files[0]);
-      f.append("extension", $("input[type='file']").get(0).files[0].name.split(".").pop());
+  $("form").submit(function(e) {
+    e.preventDefault();
+    sendImages();
+  })
 
-      // Notify client that the conversion is starting
-      $("#message").show();
-      $("#message").html("In the process of captionizing.  Please do not close this tab.  The process will take between one and five minutes.");
+  $("#videoDrop").on("click", function() {
+    $("#vidTempFile").click();
+  });
 
-      $.ajax({
-        url: "/file",
-        type: "POST",
-        data: f,
-        success: function(data) {
-          // Show download links
-          document.getElementById("output").style.display = "block";
-          document.querySelector("#output a").href = data["url"];
-          document.querySelector("#output a:not(a[target='_blank'])").download = name;
+  $("#captionsDrop").on("click", function() {
+    $("#srtTempFile").click();
+  });
 
-          // Notify user that the process is complete
-          $("#message").html("Captionization process complete!");
+  $("#vidTempFile").change(function() {
+    video = $(this).get(0).files[0];
+    $("#videoDrop h2").html(video.name);
+  });
 
-          // Reset the form
-          $(this).trigger("reset");
-        },
-
-        cache: false,
-        contentType: false,
-        processData: false,
-
-        // Notify client if there is an error
-        error: function() {
-          $("#message").html("There was an error somewhere");
-        }
-      });
-    }
+  $("#srtTempFile").change(function() {
+    captions = $(this).get(0).files[0];
+    $("#captionsDrop h2").html(captions.name);
   });
 });
