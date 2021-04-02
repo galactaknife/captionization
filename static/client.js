@@ -1,5 +1,4 @@
-var captions, video;
-var converting = false;
+var captions, video, converting;
 
 function handleVideoDrop(e) {
   if (!["mp4", "mov", "mpg", "m4v"].includes(e.originalEvent.dataTransfer.files[0].name.split(".").pop())) {
@@ -65,20 +64,20 @@ $(document).ready(() => {
   });
 
   $("#captionsDrop, #videoDrop").on("dragleave", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
   });
 
   $("#captionsDrop").on("drop", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleCaptionDrop(e);
+    e.preventDefault();
+    e.stopPropagation();
+    handleCaptionDrop(e);
   });
 
   $("#videoDrop").on("drop", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      handleVideoDrop(e);
+    e.preventDefault();
+    e.stopPropagation();
+    handleVideoDrop(e);
   });
 
   $("form").submit(function(e) {
