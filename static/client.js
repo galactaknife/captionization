@@ -51,6 +51,7 @@ function sendImages() {
 
   // Set conversion status to true
   converting = true;
+  $("input[type='submit']").prop("value", "Converting...");
 
   // Send POST request to server
   $.ajax({
@@ -61,7 +62,6 @@ function sendImages() {
     success: function(data) {
       // Process the new data from the server
       onUrlReceived(data.url);
-
       // Set conversion status to false
       converting = false;
     },
@@ -77,6 +77,7 @@ function sendImages() {
 
       // Set conversion status to false
       converting = false;
+      $("input[type='submit']").prop("value", "Process");
     }
   });
 }

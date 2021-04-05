@@ -1,8 +1,8 @@
 function onUrlReceived(url) {
-  $(".header, .footer, .content").fadeOut(1500);
+  $(".header, .content").fadeOut(500);
   $(".glassCard a").prop("href", url);
-  $(".overlay").fadeIn(1500);
+  $(".glassCard:not(.fileInputContainer)").fadeIn(300);
   setTimeout(() => {
-    $(".glassCard").fadeIn(300);
-  }, 1500);
+    $(".overlay").fadeIn(1000);
+  }, 500);
 }
