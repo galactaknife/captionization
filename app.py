@@ -10,7 +10,7 @@ app = Blueprint("app", __name__)
 def index():
     # Give the user a session id if they don't have one already
     if not "id" in session:
-        session["id"] = uuid4()
+        session["id"] = str(uuid4())
     return render_template("index.html")
 
 @app.route("/file", methods=["POST"])
