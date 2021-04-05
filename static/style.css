@@ -83,6 +83,7 @@ form > div > input.submitInput {
   width: 100%;
   color: black;
   border-radius: 8px;
+  opacity: 0.98;
 }
 
 .fileInputContainer h1 {
