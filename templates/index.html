@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Captioning Test</title>
+    <title>Captionization</title>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
@@ -22,25 +22,22 @@
         </div>
       </div>
       <div class="header">
-        <p class="centerAbsY">Create Task Video Editor | Adding Captions</p>
+        <p>Create Task Captionization</p>
       </div>
       <div class="content">
-        <form action="formProcessing" method="post" class="centerAbs">
-          <div class="fileInputContainer" id="videoDrop">
+        <form action="formProcessing" class="centerAbs">
+          <div class="fileInputContainer glassCard" id="videoDrop">
             <h1>Video</h1>
-            <h2>Please drag and drop a recording here</h2>
+            <h2>Please drop or select a recording here</h2>
           </div>
-          <div class="fileInputContainer" id="captionsDrop">
+          <div class="fileInputContainer glassCard" id="captionsDrop">
             <h1>Captions</h1>
-            <h2>Please drag and drop a .srt file</h2>
+            <h2>Please drop or select an srt file</h2>
           </div>
           <div class="submitBar">
             <input class="submitInput" type="submit" value="Process">
           </div>
         </form>
-      </div>
-      <div class="footer">
-        <p class="centerAbs">&copy; 2021 B-Man Fan Club</p>
       </div>
     </div>
     <div hidden>
