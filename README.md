@@ -14,5 +14,5 @@ Needed in order for successful conversion:
 Outputs: 
 
 <ol>
-  <li>A captionized mp4 file</li>
+  <li>An mp4 file with captions</li>
 </ol>
