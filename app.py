@@ -15,7 +15,7 @@ def index():
 
 @app.route("/file", methods=["POST"])
 def file():
-    # Upload the analyzed video to the server and return it's name
+    # Upload the analyzed video to the server and return its name
     return jsonify(url=upload(request.files["vid"], request.files["srt"], request.form["extension"]))
 
 @app.route("/uploads/<user>/<filename>", methods=["GET"])
